@@ -44,5 +44,12 @@ public class CountryController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(countryService.editCountry(id,country));
     }
 
+    //delete logics
+    @DeleteMapping("/countries/delete/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id){
+        countryService.deleteCountry(id);
+        return ResponseEntity.status(HttpStatus.GONE).body("Data Deleted successfully");
+    }
+
 
 }

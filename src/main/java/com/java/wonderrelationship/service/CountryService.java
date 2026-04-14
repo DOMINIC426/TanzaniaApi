@@ -41,6 +41,7 @@ public class CountryService {
        return cityRepository.findAll();
     }
 
+    //edit the country
     public Country editCountry(Long id, Country country) {
         // 1. Find the existing record by the URL ID
         Country exist = countryRepository.findById(id).orElseThrow(() -> new RuntimeException("This Id Does not Exist"));
@@ -57,7 +58,13 @@ public class CountryService {
 
     }
 
+    //delete the country
+    public void deleteCountry(Long id){
+       if(!countryRepository.existsById(id)){
+           throw new RuntimeException("This Id do not Exist");
+       }
+        countryRepository.deleteById(id);
+    }
 
-    //edit country
 
 }
