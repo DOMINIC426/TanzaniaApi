@@ -3,6 +3,7 @@ package com.java.wonderrelationship.controller;
 import com.java.wonderrelationship.entity.City;
 import com.java.wonderrelationship.entity.Country;
 import com.java.wonderrelationship.service.CountryService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +40,8 @@ public class CountryController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(countryService.getAllCities());
     }
 
+    @Operation(summary = "Here is Where You Can Edit Patrial ",description = "I made this Just for you All To use it Easy\n" +
+            "Dominic i Have made this Just for You can easy make it easy and easy")
     @PatchMapping("/contries/edit/{id}")
     public ResponseEntity<Country> editCountry(@PathVariable Long id,@RequestBody Country country){
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(countryService.editCountry(id,country));

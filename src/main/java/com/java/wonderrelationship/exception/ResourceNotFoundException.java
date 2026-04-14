@@ -1,4 +1,7 @@
 package com.java.wonderrelationship.exception;
 
-public class ExceptionHandler {
+public class ResourceNotFoundException extends RuntimeException{
+    public ResourceNotFoundException(String message){
+        super(message);
+    }
 }

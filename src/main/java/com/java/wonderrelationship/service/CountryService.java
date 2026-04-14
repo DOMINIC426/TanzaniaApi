@@ -2,18 +2,18 @@ package com.java.wonderrelationship.service;
 
 import com.java.wonderrelationship.entity.City;
 import com.java.wonderrelationship.entity.Country;
+import com.java.wonderrelationship.exception.ResourceNotFoundException;
 import com.java.wonderrelationship.repository.CityRepository;
 import com.java.wonderrelationship.repository.CountryRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class CountryService {
-   private CountryRepository countryRepository;
-   private CityRepository cityRepository;
+   private final CountryRepository countryRepository;
+   private final CityRepository cityRepository;
    public CountryService(CountryRepository countryRepository,CityRepository cityRepository){
        this.countryRepository=countryRepository;
        this.cityRepository=cityRepository;
@@ -31,7 +31,7 @@ public class CountryService {
 
     //adding the city
     public City addCity(Long id ,City city){
-        Country country =countryRepository.findById(id).orElseThrow(()->new RuntimeException("The Country Do not Exist"));
+        Country country =countryRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("The id Do not Exist"));
          city.setCountry(country);
          return cityRepository.save(city);
     }
@@ -44,7 +44,7 @@ public class CountryService {
     //edit the country
     public Country editCountry(Long id, Country country) {
         // 1. Find the existing record by the URL ID
-        Country exist = countryRepository.findById(id).orElseThrow(() -> new RuntimeException("This Id Does not Exist"));
+        Country exist = countryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("This Country With Id "+id +" "+"Do not found"));
 
         //only update if the value is not null this prevents null save in database
         if(country.getCountryName()!=null){
@@ -54,17 +54,16 @@ public class CountryService {
             exist.setCountryCode(country.getCountryCode());
         }
 
-        return countryRepository.save(country);
+        return countryRepository.save(exist);
 
     }
 
     //delete the country
     public void deleteCountry(Long id){
        if(!countryRepository.existsById(id)){
-           throw new RuntimeException("This Id do not Exist");
+           throw new ResourceNotFoundException("This Id do not Exist");
        }
         countryRepository.deleteById(id);
     }
-
 
 }

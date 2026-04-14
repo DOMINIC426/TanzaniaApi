@@ -24,4 +24,11 @@ public class Country {
     @OneToMany(mappedBy = "country",cascade = CascadeType.ALL,orphanRemoval = true)
     @JsonManagedReference
     private List<City> cities = new ArrayList<>();
+
+    //just for adding this is helper
+    public  void addCity(City city){
+        cities.add(city);
+        city.setCountry(this);
+    }
+
 }
